@@ -1,11 +1,8 @@
-import sys
-sys.path.append('..')
+from arc_aff_modify_speed import aff_mod
 
-from arc_aff_modify_speed import run  # 替換成你的模組和函數名稱
-
-input_file_path = "./test.aff"
-output_file_path = "./test_out.aff"
-run(0.5,input_file_path,output_file_path)
+input_file_path = "./test/test.aff"
+output_file_path = "./test/test_out.aff"
+aff_mod(0.5,input_file_path,output_file_path)
 
 print("start check")
 with open(output_file_path, 'r') as f:
@@ -25,7 +22,7 @@ with open(output_file_path, 'r') as f:
                     print("hold error")
                     break
             elif command == "arc":
-                if line.strip() != "arc(80,100,1.00,0.75,si,1.00,1.00,0,none,true)[arctap(82));":
+                if line.strip() != "arc(80,100,1.00,0.75,si,1.00,1.00,0,none,true)[arctap(82)];":
                     print("arc error")
                     break
             elif command == "scenecontrol":

@@ -13,12 +13,12 @@ def process_timing(line, speed):
     return f"timing({timing_change(parameters[0], speed)},{to2(float(parameters[1]) * float(speed))},{to2(float(parameters[2]))});"
 
 def process_note(line, speed):
-    description = line[1:-3]
+    description = line[line.find('(') + 1:line.find(')')]
     parameters = description.split(",")
     return f"({timing_change(parameters[0], speed)},{parameters[1]});"
 
 def process_hold(line, speed):
-    description = line[line.find('(') + 1:-3]
+    description = line[line.find('(') + 1:line.find(')')]
     parameters = description.split(",")
     return f"hold({timing_change(parameters[0], speed)},{timing_change(parameters[1], speed)},{parameters[2]});"
 
@@ -32,7 +32,7 @@ def process_arc(line, speed):
         arctap_description = line[line.find('[') + 1:-3]
         parameters2 = arctap_description.split(",")
         arctap_after = ",".join([f"arctap({timing_change(float(b[7:-1]), speed)})" for b in parameters2])
-        return f"arc({timing_change(parameters[0], speed)},{timing_change(parameters[1], speed)}{line[second_comma_index:line.find('[') + 1]}{arctap_after});"
+        return f"arc({timing_change(parameters[0], speed)},{timing_change(parameters[1], speed)}{line[second_comma_index:line.find('[') + 1]}{arctap_after}];"
     else:
         return f"arc({timing_change(parameters[0], speed)},{timing_change(parameters[1], speed)}{line[second_comma_index:-1]}"
 
@@ -52,7 +52,7 @@ def get_file_path(prompt, default_path="."):
         return os.path.abspath(default_path)
     return os.path.abspath(user_input)
 
-def run(speed,input_file_path,output_file_path):
+def aff_mod(speed,input_file_path,output_file_path):
 
     all_lines = []
 
@@ -95,7 +95,7 @@ def main():
     parm2 = sys.argv[2]
     speed = sys.argv[3]
 
-    run(speed,parm1,parm2)
+    aff_mod(speed,parm1,parm2)
 
 if __name__ == "__main__":
     main()
