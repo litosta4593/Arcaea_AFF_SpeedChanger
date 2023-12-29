@@ -37,7 +37,7 @@ python change_audio.py ./base.ogg 0.9
 執行run_test即可
 
 # 待完成功能
-- 對scenecontrol和camera變速支持
+- ~~對scenecontrol和camera變速支持~~
 - ~~資料夾批量處理0~3.aff~~
 - ~~音源變速~~
 - songlist修改(改變基礎流速)

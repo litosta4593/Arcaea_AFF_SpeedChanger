@@ -37,10 +37,22 @@ def process_arc(line, speed):
         return f"arc({timing_change(parameters[0], speed)},{timing_change(parameters[1], speed)}{line[second_comma_index:-1]}"
 
 def process_scenecontrol(line, speed):
-    description = line[line.find('(') + 1:line.find(')') - 1]
+    description = line[line.find('(') + 1:line.find(')')]
     parameters = description.split(",")
+    if parameters[1] == "trackhide" or parameters[1] == "trackshow":
+        return f"scenecontrol({timing_change(parameters[0], speed)},{parameters[1]});"
+    if parameters[1] == "trackdisplay" or parameters[1] == "redline" or parameters[1] == "arcahvdistort" or parameters[1] == "arcahvdebris" or parameters[1] == "enwidencamera" or parameters[1] == "enwidenlanes":
+        last_comma_index = line.rfind(',')
+        return f"scenecontrol({timing_change(parameters[0], speed)},{parameters[1]},{timing_change(parameters[2], speed)}{line[last_comma_index:-1]}"
     first_comma_index = line.find(',')
     return f"scenecontrol({timing_change(parameters[0], speed)}{line[first_comma_index:-1]}"
+
+def process_camera(line, speed):
+    description = line[line.find('(') + 1:line.find(')')]
+    parameters = description.split(",")
+    first_comma_index = line.find(',')
+    last_comma_index = line.rfind(',')
+    return f"camera({timing_change(parameters[0], speed)}{line[first_comma_index:last_comma_index+1]}{timing_change(parameters[8], speed)});"
 
 def process_audio_offset(line, speed):
     parameters = line[line.find(':') + 1:-1]
@@ -74,6 +86,9 @@ def aff_mod(speed,input_file_path,output_file_path):
                 all_lines.append(processed_line + "\n")
             elif command == "scenecontrol":
                 processed_line = process_scenecontrol(line, speed)
+                all_lines.append(processed_line + "\n")
+            elif command == "camera":
+                processed_line = process_camera(line, speed)
                 all_lines.append(processed_line + "\n")
             elif command.find('AudioOffset') != -1:
                 processed_line = process_audio_offset(line, speed)
