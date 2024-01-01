@@ -10,6 +10,22 @@ def change_audio(input_file, output_file, speed_factor):
     from change_audio import change_audio
     change_audio(input_file, output_file, speed_factor)
 
+def modify_sonlist(folder_path, speed_factor,type="chart"):
+    parent_folder = os.path.dirname(folder_path)
+    if os.path.exists(os.path.join(parent_folder, "songlist")):
+        folder_name = os.path.basename(folder_path)
+        if type == "chart":
+            from songlist_mod import add_speed_variation
+            if add_speed_variation(parent_folder,folder_name, speed_factor):
+                print(f"成功修改songlist")
+        if type == "base":
+            from songlist_mod import change_base_bpm
+            if change_base_bpm(parent_folder,folder_name, speed_factor):
+                print(f"成功修改songlist的bpm_base")
+    else:
+        print("找不到songlist")
+            
+
 def process_folder(folder_path, speed_factor):
     parent_folder = os.path.dirname(folder_path)
     folder_name = os.path.basename(folder_path)
@@ -40,12 +56,19 @@ def process_folder(folder_path, speed_factor):
     print(f"Processing completed.輸出結果到{output_folder}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python run.py <speed_factor> <folder_path>")
-        sys.exit(1)
+    if len(sys.argv) < 3:
+        print("Usage: python run.py <speed_factor> <folder_path> [type]")
+        sys.exit()
 
     speed_factor = float(sys.argv[1])
     folder_path = sys.argv[2]
+    
+    if len(sys.argv) > 3:
+        type = sys.argv[3]
+    else:
+        type = "chart"
+
+    modify_sonlist(folder_path, speed_factor, type)
     process_folder(folder_path, speed_factor)
 
     
