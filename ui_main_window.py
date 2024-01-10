@@ -107,11 +107,28 @@ class MainWindow(QMainWindow):
                     self.infoLabel.setStyleSheet("color: blue;")
                     QApplication.processEvents()
                     if speed_content == "全部":
-                        self.processFull(folder_path, speed_factor)
+                        audio_file_exist = os.path.exists(os.path.join(folder_path, "base.ogg"))
+                        aff_files_exist = all(os.path.exists(os.path.join(folder_path, f"{i}.aff")) for i in range(4))
+                        if audio_file_exist and aff_files_exist:
+                            self.processFull(folder_path, speed_factor)
+                        else:
+                            self.infoLabel.setText(f"缺少必要檔案，無法執行變速")
+                            self.infoLabel.setStyleSheet("color: red;")
+                        
                     elif speed_content == "純音樂":
-                        self.changeAudio(folder_path, speed_factor)
+                        audio_file_exist = os.path.exists(os.path.join(folder_path, "base.ogg"))
+                        if audio_file_exist:
+                            self.changeAudio(folder_path, speed_factor)
+                        else:
+                            self.infoLabel.setText(f"缺少 base.ogg 檔案，無法執行變速")
+                            self.infoLabel.setStyleSheet("color: red;")
                     elif speed_content == "純譜面":
-                        self.processAff(folder_path, speed_factor)
+                        aff_files_exist = all(os.path.exists(os.path.join(folder_path, f"{i}.aff")) for i in range(4))
+                        if aff_files_exist:
+                            self.processAff(folder_path, speed_factor)
+                        else:
+                            self.infoLabel.setText(f"缺少 0~3.aff 檔案，無法執行變速")
+                            self.infoLabel.setStyleSheet("color: red;")
                     else:
                         QMessageBox.warning(self, "警告", "不支援的變速內容", QMessageBox.Ok)
                 elif speed_type == "流速":
