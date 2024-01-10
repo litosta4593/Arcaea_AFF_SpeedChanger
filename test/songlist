@@ -1,0 +1,43 @@
+{
+  "songs": [
+    {
+      "id": "infinitestrife",
+      "title_localized": {
+        "en": "Singularityvvvvip"
+      },
+      "artist": "Arcaea",
+      "bpm": "175",
+      "bpm_base": "162.7500",
+      "set": "base",
+      "purchase": "",
+      "audioPreview": 44494,
+      "audioPreviewEnd": 76853,
+      "side": 1,
+      "bg": "prelude_conflict",
+      "remote_dl": false,
+      "world_unlock": false,
+      "date": 1617926402,
+      "version": "3.5",
+      "difficulties": [
+        {
+          "ratingClass": 0,
+          "chartDesigner": "Arcaea Edit",
+          "jacketDesigner": "",
+          "rating": 0
+        },
+        {
+          "ratingClass": 1,
+          "chartDesigner": "Arcaea Edit",
+          "jacketDesigner": "",
+          "rating": 0
+        },
+        {
+          "ratingClass": 2,
+          "chartDesigner": "Arcaea Edit",
+          "jacketDesigner": "",
+          "rating": 0
+        }
+      ]
+    }
+  ]
+}
